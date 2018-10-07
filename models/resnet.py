@@ -52,7 +52,7 @@ models_urls = {
 	'101_voc'    : 'https://cloudstor.aarnet.edu.au/plus/s/CPRKWiaCIDRdOwF/download',
     '152_voc'    : 'https://cloudstor.aarnet.edu.au/plus/s/2w8bFOd45JtPqbD/download',
 	
-	'50_nyu'     : 'https://cloudstor.aarnet.edu.au/plus/s/gE8dnQmHr9svpfu/donwload',
+	'50_nyu'     : 'https://cloudstor.aarnet.edu.au/plus/s/gE8dnQmHr9svpfu/download',
     '101_nyu'    : 'https://cloudstor.aarnet.edu.au/plus/s/VnsaSUHNZkuIqeB/download',
     '152_nyu'    : 'https://cloudstor.aarnet.edu.au/plus/s/EkPQzB2KtrrDnKf/download',
 
