@@ -1,0 +1,17 @@
+ipykernel==4.8.2
+ipython==5.5.0
+ipython-genutils==0.2.0
+jupyter==1.0.0
+jupyter-client==5.2.2
+jupyter-console==5.2.0
+jupyter-core==4.4.0
+matplotlib==2.1.2
+notebook==5.4.0
+numpy==1.14.3
+opencv-python==3.4.0.12
+Pillow==5.0.0
+scikit-image==0.13.1
+six==1.11.0
+torch==0.4.1
+tqdm==4.11.2
+urllib3==1.22
