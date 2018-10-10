@@ -172,6 +172,6 @@ def mbv2(num_classes, pretrained=True, **kwargs):
             bname = 'mbv2_' + dataset.lower()
             key = 'rf_lw' + bname
             url = models_urls[bname]
-            model.load_state_dict(maybe_download(key, url))
+            model.load_state_dict(maybe_download(key, url), strict=False)
     return model
 

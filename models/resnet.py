@@ -240,7 +240,7 @@ def rf_lw50(num_classes, pretrained=True, **kwargs):
             bname = '50_' + dataset.lower()
             key = 'rf_lw' + bname
             url = models_urls[bname]
-            model.load_state_dict(maybe_download(key, url))
+            model.load_state_dict(maybe_download(key, url), strict=False)
     return model
 
 def rf_lw101(num_classes, pretrained=True, **kwargs):
@@ -251,7 +251,7 @@ def rf_lw101(num_classes, pretrained=True, **kwargs):
             bname = '101_' + dataset.lower()
             key = 'rf_lw' + bname
             url = models_urls[bname]
-            model.load_state_dict(maybe_download(key, url))
+            model.load_state_dict(maybe_download(key, url), strict=False)
     return model
 
 def rf_lw152(num_classes, pretrained=True, **kwargs):
@@ -262,5 +262,5 @@ def rf_lw152(num_classes, pretrained=True, **kwargs):
             bname = '152_' + dataset.lower()
             key = 'rf_lw' + bname
             url = models_urls[bname]
-            model.load_state_dict(maybe_download(key, url))
+            model.load_state_dict(maybe_download(key, url), strict=False)
     return model
