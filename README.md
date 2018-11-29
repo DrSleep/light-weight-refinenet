@@ -66,7 +66,7 @@ Our most recent work on real-time joint semantic segmentation and depth estimati
 
 ## License
 
-This project is licensed under the 2-clause BSD License - see the [LICENSE](LICENSE) file for details
+For academic usage, this project is licensed under the 2-clause BSD License - see the [LICENSE](LICENSE) file for details. For commercial usage, please contact the authors.
 
 ## Acknowledgments
 
