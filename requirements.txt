@@ -14,4 +14,4 @@ scikit-image==0.13.1
 six==1.11.0
 torch==0.4.1
 tqdm==4.11.2
-urllib3==1.22
+urllib3>=1.23
