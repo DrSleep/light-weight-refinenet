@@ -54,7 +54,7 @@ def convbnrelu(in_planes, out_planes, kernel_size, stride=1, groups=1, act=True)
                              batchnorm(out_planes))
 
 class CRPBlock(nn.Module):
-    
+
     def __init__(self, in_planes, out_planes, n_stages):
         super(CRPBlock, self).__init__()
         for i in range(n_stages):
@@ -65,7 +65,7 @@ class CRPBlock(nn.Module):
         self.stride = 1
         self.n_stages = n_stages
         self.maxpool = nn.MaxPool2d(kernel_size=5, stride=1, padding=2)
-    
+
     def forward(self, x):
         top = x
         for i in range(self.n_stages):

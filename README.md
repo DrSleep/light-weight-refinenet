@@ -51,14 +51,35 @@ If you do not want to be involved in any hassle regarding the setup of the Jupyt
 * [PASCAL VOC](https://colab.research.google.com/drive/1J5P8yCOrjpeDcEeF5Haj_MQeb7SGF5vi)
 * [NYUv2-40](https://colab.research.google.com/drive/1S5wvuukFM6GTLbj8VxZFdkFn2jhdhiES)
 
+## Training scripts
+
+We provide training scripts to get you started on the [NYUv2-40](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html) dataset. The methodology slightly differs from the one described in the paper and leads to better and more stable results (at least, on NYU).
+
+In particular, here we i) start with a lower learning rate (as we initialise weights using default PyTorch's intiialisation instead of normal(0.01)), ii) add more aggressive augmentation (random scale between 0.5 and 2.0), and iii) pad each image inside the batch to a fixed crop size (instead of resizing all of them). The training process is divided into 3 stages: after each the optimisers are re-created with the learning rates halved. All the training is done using a single GTX1080Ti GPU card.
+Additional experiments with this new methodology on the other datasets (and with the MobileNet-v2 backbone) are under way, and relevant scripts will be provided once available. Please also note that the training scripts were written in Python 3.6.
+
+To start training on NYU:
+
+1. Build the helper code for calculating mean IoU written in Cython. For that, execute the following `python src/setup.py build_ext --build-lib=./src/`.
+2. Make sure to provide the correct paths to the dataset images either by modifying `src/config.py` or `train/nyu.sh`
+3. Run `./train/nyu.sh`. On a single 1080Ti, the training takes around 3-6 hours (ResNet-50 - ResNet-152, correspondingly).
+
+If you want to train the networks using your dataset, you would need to modify the following:
+
+1. Add files with paths to your images and segmentation masks. The paths can either be relative or absolute - additional flags `TRAIN_DIR` and `VAL_DIR` in `src/config.py` can be used to prepend the relative paths. It is up to you to decide how to encode the segmentation masks - in the NYU example, the masks are encoded without a colourmap, i.e., with a single digit (label) per 2-D location;
+2. Make sure to adapt the implementation of the NYUDataset for your case in `src/datasets.py`: in particular, pay attention to how the images and masks are being read from the files;
+3. Modify `src/config.py` for your needs - do not forget about changing the number of classes (`NUM_CLASSES`);
+4. Finally, run your code - see `train/nyu.sh` for example. 
+
+
 ## More to come
 
 Once time permits, more things will be added to this repository:
 
 * NASNet-Mobile
 * CityScapes' models
-* Full training pipeline example
-* Evaluation scripts
+* ~~Full training pipeline example~~
+* ~~Evaluation scripts~~ (`src/train.py` provides the flag `--evaluate`)
 
 ## More projects to check out
 

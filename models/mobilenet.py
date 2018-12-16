@@ -74,7 +74,7 @@ class MBv2(nn.Module):
     num_layers = len(mobilenet_config)
     def __init__(self, num_classes):
         super(MBv2, self).__init__()
-        
+
         self.layer1 = convbnrelu(3, self.in_planes, kernel_size=3, stride=2)
         c_layer = 2
         for t,c,n,s in (self.mobilenet_config):
@@ -83,7 +83,7 @@ class MBv2(nn.Module):
                 layers.append(InvertedResidualBlock(self.in_planes, c, expansion_factor=t, stride=s if idx == 0 else 1))
                 self.in_planes = c
             setattr(self, 'layer{}'.format(c_layer), nn.Sequential(*layers))
-            c_layer += 1  
+            c_layer += 1
 
         ## Light-Weight RefineNet ##
         self.conv8 = conv1x1(320, 256, bias=False)
@@ -100,7 +100,7 @@ class MBv2(nn.Module):
         self.conv_adapt4 = conv1x1(256, 256, bias=False)
         self.conv_adapt3 = conv1x1(256, 256, bias=False)
         self.conv_adapt2 = conv1x1(256, 256, bias=False)
-        
+
         self.segm = conv3x3(256, num_classes, bias=True)
         self.relu = nn.ReLU6(inplace=True)
 
@@ -138,7 +138,7 @@ class MBv2(nn.Module):
         l3 = self.conv3(l3)
         l3 = self.relu(l3 + l4)
         l3 = self.crp1(l3)
-        
+
         out_segm = self.segm(l3)
 
         return out_segm
@@ -174,4 +174,3 @@ def mbv2(num_classes, pretrained=True, **kwargs):
             url = models_urls[bname]
             model.load_state_dict(maybe_download(key, url), strict=False)
     return model
-
