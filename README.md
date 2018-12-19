@@ -60,6 +60,7 @@ Additional experiments with this new methodology on the other datasets (and with
 
 To start training on NYU:
 
+0. If not already done, download the dataset from [here](https://cloudstor.aarnet.edu.au/plus/s/OZqPy3RnmbCkOWh). Note that the white borders in all the images were already cropped.
 1. Build the helper code for calculating mean IoU written in Cython. For that, execute the following `python src/setup.py build_ext --build-lib=./src/`.
 2. Make sure to provide the correct paths to the dataset images either by modifying `src/config.py` or `train/nyu.sh`
 3. Run `./train/nyu.sh`. On a single 1080Ti, the training takes around 3-6 hours (ResNet-50 - ResNet-152, correspondingly).
@@ -83,7 +84,8 @@ Once time permits, more things will be added to this repository:
 
 ## More projects to check out
 
-Our most recent work on real-time joint semantic segmentation and depth estimation is built on top of Light-Weight RefineNet with MobileNet-v2. Check out the paper [here](https://arxiv.org/abs/1809.04766); the models are soon to be released!
+1. Our most recent work on real-time joint semantic segmentation and depth estimation is built on top of Light-Weight RefineNet with MobileNet-v2. Check out the paper [here](https://arxiv.org/abs/1809.04766); the models are soon to be released!
+2. RefineNet-101 trained on PASCAL VOC is available [here](https://github.com/DrSleep/refinenet-pytorch)
 
 ## License
 

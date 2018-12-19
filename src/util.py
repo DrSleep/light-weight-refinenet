@@ -3,6 +3,8 @@
 import json
 import os
 
+import torch
+
 def compute_params(model):
     """Compute number of parameters"""
     n_total_params = 0

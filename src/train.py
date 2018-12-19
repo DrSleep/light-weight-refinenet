@@ -36,6 +36,10 @@ import re
 import sys
 import time
 
+# misc
+import cv2
+import numpy as np
+
 # pytorch libs
 import torch
 import torch.nn as nn
