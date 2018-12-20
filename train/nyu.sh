@@ -1,3 +1,3 @@
 #!/bin/sh
-PYTHONPATH=$(pwd) python src/train.py \
+PYTHONPATH=$(pwd):$PYTHONPATH python src/train.py \
     --enc 50
