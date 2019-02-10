@@ -84,7 +84,7 @@ Once time permits, more things will be added to this repository:
 
 ## More projects to check out
 
-1. Our most recent work on real-time joint semantic segmentation and depth estimation is built on top of Light-Weight RefineNet with MobileNet-v2. Check out the paper [here](https://arxiv.org/abs/1809.04766); the models are soon to be released!
+1. Our most recent work on real-time joint semantic segmentation and depth estimation is built on top of Light-Weight RefineNet with MobileNet-v2. Check out the paper [here](https://arxiv.org/abs/1809.04766); the models are available [here](https://github.com/DrSleep/multi-task-refinenet)!
 2. RefineNet-101 trained on PASCAL VOC is available [here](https://github.com/DrSleep/refinenet-pytorch)
 
 ## License
