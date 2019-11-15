@@ -9,7 +9,7 @@ matplotlib==2.2.2
 notebook>=5.7.2
 numpy==1.14.5
 opencv-python==3.4.1.15
-Pillow==5.2.0
+Pillow==6.2.0
 scikit-image==0.14.0
 six==1.11.0
 torch==0.4.1
