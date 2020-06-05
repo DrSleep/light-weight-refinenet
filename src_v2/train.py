@@ -107,6 +107,7 @@ def setup_optimisers_and_schedulers(args, model):
 
 def main():
     args = get_arguments()
+    logger = logging.getLogger(__name__)
     torch.backends.cudnn.deterministic = True
     dt.misc.set_seed(args.random_seed)
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -124,6 +125,7 @@ def main():
         if stage > 0:
             epoch_start = 0
         for epoch in range(epoch_start, num_epochs):
+            logger.info(f"Training: stage {stage} epoch {epoch}")
             dt.engine.train(
                 model=segmenter,
                 opts=optimisers,
@@ -135,6 +137,7 @@ def main():
             for scheduler in schedulers:
                 scheduler.step(total_epoch)
             if (epoch + 1) % args.val_every[stage] == 0:
+                logger.info(f"Validation: stage {stage} epoch {epoch}")
                 vals = dt.engine.validate(
                     model=segmenter, metrics=validation_loss, dataloader=val_loader,
                 )
