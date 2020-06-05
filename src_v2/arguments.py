@@ -21,6 +21,12 @@ def get_arguments():
     parser.add_argument("--shorter-side", type=int, nargs="+", default=(350, 350, 350,))
     parser.add_argument("--low-scale", type=float, nargs="+", default=(0.5, 0.5, 0.5,))
     parser.add_argument("--high-scale", type=float, nargs="+", default=(2.0, 2.0, 2.0,))
+    parser.add_argument(
+        "--augmentations-type",
+        type=str,
+        choices=["densetorch", "albumentations"],
+        default="densetorch",
+    )
 
     # Dataset
     parser.add_argument(
@@ -104,6 +110,35 @@ def get_arguments():
     )
     parser.add_argument("--val-every", type=int, nargs="+", default=(5, 5, 5,))
     parser.add_argument("--num-classes", type=int, default=40)
+    parser.add_argument(
+        "--dataset-type",
+        type=str,
+        default="densetorch",
+        choices=["densetorch", "torchvision"],
+    )
+    parser.add_argument(
+        "--stage-names",
+        type=str,
+        nargs="+",
+        choices=["SBD", "VOC"],
+        default=("SBD", "VOC",),
+        help="Only used if dataset_type == torchvision.",
+    )
+    parser.add_argument(
+        "--train-download",
+        type=int,
+        nargs="+",
+        choices=[0, 1],
+        default=(0, 0,),
+        help="Only used if dataset_type == torchvision.",
+    )
+    parser.add_argument(
+        "--val-download",
+        type=int,
+        choices=[0, 1],
+        default=0,
+        help="Only used if dataset_type == torchvision.",
+    )
 
     # Checkpointing configuration
     parser.add_argument("--ckpt-dir", type=str, default="./checkpoints/")

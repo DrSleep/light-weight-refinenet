@@ -63,6 +63,8 @@ def setup_data_loaders(args):
         img_scale=args.img_scale,
         ignore_label=args.ignore_label,
         num_stages=args.num_stages,
+        augmentations_type=args.augmentations_type,
+        dataset_type=args.dataset_type,
     )
     train_sets, val_set = get_datasets(
         train_dir=args.train_dir,
@@ -72,6 +74,10 @@ def setup_data_loaders(args):
         train_transforms=train_transforms,
         val_transforms=val_transforms,
         masks_names=("segm",),
+        dataset_type=args.dataset_type,
+        stage_names=args.stage_names,
+        train_download=args.train_download,
+        val_download=args.val_download,
     )
     train_loaders, val_loader = dt.data.get_loaders(
         train_batch_size=args.train_batch_size,
