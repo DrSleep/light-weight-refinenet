@@ -8,6 +8,15 @@ Vladimir Nekrasov, Chunhua Shen, Ian Reid
 In BMVC 2018
 ```
 
+## UPDATES
+
+### 5, June, 2020: a new version of the code has been pushed. It currently resides in [src_v2/](https://github.com/DrSleep/light-weight-refinenet/tree/master/src_v2). The code now closely interacts with [densetorch](https://github.com/DrSleep/DenseTorch) and supports transformations from [albumentations](https://github.com/albumentations-team/albumentations), while also supporting [torchvision](https://pytorch.org/docs/stable/torchvision/datasets.html) datasets. Three training examples are provided in [train/](https://github.com/DrSleep/light-weight-refinenet/tree/master/train):
+1. [train_v2_nyu.sh](https://github.com/DrSleep/light-weight-refinenet/blob/master/train/train_v2_nyu.sh) is analogous to [nyu.sh](https://github.com/DrSleep/light-weight-refinenet/blob/master/train/nyu.sh), trains Light-Weight-RefineNet-50 on NYU, achieving ~42% mean IoU on the validation set (no TTA).
+2. [train_v2_nyu_albumentations.sh](https://github.com/DrSleep/light-weight-refinenet/blob/master/train/train_v2_nyu_albumentations.sh) uses transformations from the albumentations package.
+3. [train_v2_sbd_voc.sh](https://github.com/DrSleep/light-weight-refinenet/blob/master/train/train_v2_sbd_voc.sh) trains Light-Weight-RefineNet-50 on SBD and VOC datasets from torchvision with transformations from the albumentations package.
+
+If you want to train the network on your own dataset, specify the arguments (see the available options in [src_v2/arguments.py](https://github.com/DrSleep/light-weight-refinenet/blob/master/src_v2/arguments.py)) and provide implementation of your dataset in [src_v2/data.py](https://github.com/DrSleep/light-weight-refinenet/blob/master/src_v2/data.py#L283) if it is not supported by either [densetorch](https://github.com/DrSleep/DenseTorch) or [torchvision](https://pytorch.org/docs/stable/torchvision/datasets.html).
+
 ## Getting Started
 
 For flawless reproduction of our results, the Ubuntu OS is recommended. The models have been tested using Python 2.7 and Python 3.6.
