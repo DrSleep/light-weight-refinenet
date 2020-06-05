@@ -9,6 +9,7 @@ experiments
 pretrained
 ckpt
 weights/
+checkpoints/
 
 # C extensions
 *.so

@@ -5,6 +5,7 @@ import os
 
 import torch
 
+
 def compute_params(model):
     """Compute number of parameters"""
     n_total_params = 0
@@ -13,9 +14,11 @@ def compute_params(model):
         n_total_params += n_elem
     return n_total_params
 
+
 # Adopted from https://raw.githubusercontent.com/pytorch/examples/master/imagenet/main.py
 class AverageMeter(object):
     """Computes and stores the average and current value"""
+
     def __init__(self):
         self.reset()
 
@@ -31,9 +34,11 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
-class Saver():
+
+class Saver:
     """Saver class for managing parameters"""
-    def __init__(self, args, ckpt_dir, best_val=0, condition=lambda x,y: x > y):
+
+    def __init__(self, args, ckpt_dir, best_val=0, condition=lambda x, y: x > y):
         """
         Args:
             args (dict): dictionary with arguments.
@@ -45,9 +50,14 @@ class Saver():
         """
         if not os.path.exists(ckpt_dir):
             os.makedirs(ckpt_dir)
-        with open('{}/args.json'.format(ckpt_dir), 'w') as f:
-            json.dump({k:v for k,v in args.items() if isinstance(v, (int, float, str))}, f,
-                      sort_keys = True, indent = 4, ensure_ascii = False)
+        with open("{}/args.json".format(ckpt_dir), "w") as f:
+            json.dump(
+                {k: v for k, v in args.items() if isinstance(v, (int, float, str))},
+                f,
+                sort_keys=True,
+                indent=4,
+                ensure_ascii=False,
+            )
         self.ckpt_dir = ckpt_dir
         self.best_val = best_val
         self.condition = condition
@@ -61,9 +71,11 @@ class Saver():
         """Save new checkpoint"""
         self._counter += 1
         if self._do_save(new_val):
-            logger.info(" New best value {:.4f}, was {:.4f}".format(new_val, self.best_val))
+            logger.info(
+                " New best value {:.4f}, was {:.4f}".format(new_val, self.best_val)
+            )
             self.best_val = new_val
-            dict_to_save['best_val'] = new_val
-            torch.save(dict_to_save, '{}/checkpoint.pth.tar'.format(self.ckpt_dir))
+            dict_to_save["best_val"] = new_val
+            torch.save(dict_to_save, "{}/checkpoint.pth.tar".format(self.ckpt_dir))
             return True
         return False

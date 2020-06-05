@@ -1,0 +1,13 @@
+exclude: 'docs/|README'
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0  # Use the ref you want to point at
+    hooks:
+    -   id: trailing-whitespace
+    -   id: flake8
+        args: ["--ignore=E203,E266,E501,W503,F403,F401,F405", "--max-line-length=100"]
+    -   id: end-of-file-fixer
+-   repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+    -   id: black

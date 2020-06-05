@@ -34,55 +34,74 @@ from utils.helpers import maybe_download
 from utils.layer_factory import batchnorm, conv1x1, conv3x3, convbnrelu, CRPBlock
 
 
-data_info = {
-    21: 'VOC'
-    }
+data_info = {21: "VOC"}
 
 models_urls = {
-    'mbv2_voc': 'https://cloudstor.aarnet.edu.au/plus/s/PsEL9uEuxOtIxJV/download'
-    }
+    "mbv2_voc": "https://cloudstor.aarnet.edu.au/plus/s/PsEL9uEuxOtIxJV/download"
+}
+
 
 class InvertedResidualBlock(nn.Module):
     """Inverted Residual Block from https://arxiv.org/abs/1801.04381"""
+
     def __init__(self, in_planes, out_planes, expansion_factor, stride=1):
         super(InvertedResidualBlock, self).__init__()
         intermed_planes = in_planes * expansion_factor
         self.residual = (in_planes == out_planes) and (stride == 1)
-        self.output = nn.Sequential(convbnrelu(in_planes, intermed_planes, 1),
-                                    convbnrelu(intermed_planes, intermed_planes, 3, stride=stride, groups=intermed_planes),
-                                    convbnrelu(intermed_planes, out_planes, 1, act=False))
+        self.output = nn.Sequential(
+            convbnrelu(in_planes, intermed_planes, 1),
+            convbnrelu(
+                intermed_planes,
+                intermed_planes,
+                3,
+                stride=stride,
+                groups=intermed_planes,
+            ),
+            convbnrelu(intermed_planes, out_planes, 1, act=False),
+        )
 
     def forward(self, x):
         residual = x
         out = self.output(x)
         if self.residual:
-            return (out + residual)
+            return out + residual
         else:
             return out
 
+
 class MBv2(nn.Module):
     """Net Definition"""
-    mobilenet_config = [[1, 16, 1, 1], # expansion rate, output channels, number of repeats, stride
-                        [6, 24, 2, 2],
-                        [6, 32, 3, 2],
-                        [6, 64, 4, 2],
-                        [6, 96, 3, 1],
-                        [6, 160, 3, 2],
-                        [6, 320, 1, 1],
-                       ]
-    in_planes = 32 # number of input channels
+
+    mobilenet_config = [
+        [1, 16, 1, 1],  # expansion rate, output channels, number of repeats, stride
+        [6, 24, 2, 2],
+        [6, 32, 3, 2],
+        [6, 64, 4, 2],
+        [6, 96, 3, 1],
+        [6, 160, 3, 2],
+        [6, 320, 1, 1],
+    ]
+    in_planes = 32  # number of input channels
     num_layers = len(mobilenet_config)
+
     def __init__(self, num_classes):
         super(MBv2, self).__init__()
 
         self.layer1 = convbnrelu(3, self.in_planes, kernel_size=3, stride=2)
         c_layer = 2
-        for t,c,n,s in (self.mobilenet_config):
+        for t, c, n, s in self.mobilenet_config:
             layers = []
             for idx in range(n):
-                layers.append(InvertedResidualBlock(self.in_planes, c, expansion_factor=t, stride=s if idx == 0 else 1))
+                layers.append(
+                    InvertedResidualBlock(
+                        self.in_planes,
+                        c,
+                        expansion_factor=t,
+                        stride=s if idx == 0 else 1,
+                    )
+                )
                 self.in_planes = c
-            setattr(self, 'layer{}'.format(c_layer), nn.Sequential(*layers))
+            setattr(self, "layer{}".format(c_layer), nn.Sequential(*layers))
             c_layer += 1
 
         ## Light-Weight RefineNet ##
@@ -108,32 +127,32 @@ class MBv2(nn.Module):
 
     def forward(self, x):
         x = self.layer1(x)
-        x = self.layer2(x) # x / 2
-        l3 = self.layer3(x) # 24, x / 4
-        l4 = self.layer4(l3) # 32, x / 8
-        l5 = self.layer5(l4) # 64, x / 16
-        l6 = self.layer6(l5) # 96, x / 16
-        l7 = self.layer7(l6) # 160, x / 32
-        l8 = self.layer8(l7) # 320, x / 32
+        x = self.layer2(x)  # x / 2
+        l3 = self.layer3(x)  # 24, x / 4
+        l4 = self.layer4(l3)  # 32, x / 8
+        l5 = self.layer5(l4)  # 64, x / 16
+        l6 = self.layer6(l5)  # 96, x / 16
+        l7 = self.layer7(l6)  # 160, x / 32
+        l8 = self.layer8(l7)  # 320, x / 32
         l8 = self.conv8(l8)
         l7 = self.conv7(l7)
         l7 = self.relu(l8 + l7)
         l7 = self.crp4(l7)
         l7 = self.conv_adapt4(l7)
-        l7 = nn.Upsample(size=l6.size()[2:], mode='bilinear', align_corners=True)(l7)
+        l7 = nn.Upsample(size=l6.size()[2:], mode="bilinear", align_corners=True)(l7)
 
         l6 = self.conv6(l6)
         l5 = self.conv5(l5)
         l5 = self.relu(l5 + l6 + l7)
         l5 = self.crp3(l5)
         l5 = self.conv_adapt3(l5)
-        l5 = nn.Upsample(size=l4.size()[2:], mode='bilinear', align_corners=True)(l5)
+        l5 = nn.Upsample(size=l4.size()[2:], mode="bilinear", align_corners=True)(l5)
 
         l4 = self.conv4(l4)
         l4 = self.relu(l5 + l4)
         l4 = self.crp2(l4)
         l4 = self.conv_adapt2(l4)
-        l4 = nn.Upsample(size=l3.size()[2:], mode='bilinear', align_corners=True)(l4)
+        l4 = nn.Upsample(size=l3.size()[2:], mode="bilinear", align_corners=True)(l4)
 
         l3 = self.conv3(l3)
         l3 = self.relu(l3 + l4)
@@ -154,7 +173,7 @@ class MBv2(nn.Module):
                 m.bias.data.zero_()
 
     def _make_crp(self, in_planes, out_planes, stages):
-        layers = [CRPBlock(in_planes, out_planes,stages)]
+        layers = [CRPBlock(in_planes, out_planes, stages)]
         return nn.Sequential(*layers)
 
 
@@ -169,8 +188,8 @@ def mbv2(num_classes, pretrained=True, **kwargs):
     if pretrained:
         dataset = data_info.get(num_classes, None)
         if dataset:
-            bname = 'mbv2_' + dataset.lower()
-            key = 'rf_lw' + bname
+            bname = "mbv2_" + dataset.lower()
+            key = "rf_lw" + bname
             url = models_urls[bname]
             model.load_state_dict(maybe_download(key, url), strict=False)
     return model
