@@ -1,9 +1,9 @@
-import logging
 import numpy as np
-import re
 from torch.optim.lr_scheduler import MultiStepLR
 
 import densetorch as dt
+
+from network import get_encoder_and_decoder_params
 
 
 def get_lr_schedulers(
@@ -28,17 +28,7 @@ def get_optimisers(
     dec_weight_decay,
     dec_momentum,
 ):
-    logger = logging.getLogger(__name__)
-    # Filter parameters of encoder / decoder
-    enc_params = []
-    dec_params = []
-    for k, v in model.named_parameters():
-        if bool(re.match(".*conv1.*|.*bn1.*|.*layer.*", k)):
-            enc_params.append(v)
-            logger.info(" Enc. parameter: {}".format(k))
-        else:
-            dec_params.append(v)
-            logger.info(" Dec. parameter: {}".format(k))
+    enc_params, dec_params = get_encoder_and_decoder_params(model)
     # Create optimisers
     optimisers = [
         dt.misc.create_optim(
