@@ -43,7 +43,7 @@ def setup_checkpoint_and_maybe_restore(args, model):
         best_val=0,
         condition=lambda x, y: x > y,
     )  # keep checkpoint with the best validation score
-    epoch_start, _, state_dict = saver.load(
+    epoch_start, _, state_dict = saver.maybe_load(
         ckpt_path=args.ckpt_path, keys_to_load=["epoch", "best_val", "state_dict"],
     )
     if epoch_start is None:
