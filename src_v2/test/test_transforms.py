@@ -3,6 +3,8 @@ import pytest
 import random
 import torch
 
+from densetorch.misc import broadcast
+
 from data import get_transforms
 
 
@@ -76,10 +78,10 @@ def test_transforms(
     ignore_label=255,
 ):
     train_transforms, val_transforms = get_transforms(
-        crop_size=crop_size,
-        shorter_side=350,
-        low_scale=0.5,
-        high_scale=2.0,
+        crop_size=broadcast(crop_size, num_stages),
+        shorter_side=broadcast(shorter_side, num_stages),
+        low_scale=broadcast(low_scale, num_stages),
+        high_scale=broadcast(high_scale, num_stages),
         img_mean=(0.5, 0.5, 0.5),
         img_std=(0.5, 0.5, 0.5),
         img_scale=1.0 / 255,

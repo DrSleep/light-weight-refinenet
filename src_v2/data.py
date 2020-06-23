@@ -2,8 +2,6 @@ import cv2
 import numpy as np
 import torch
 
-from densetorch.misc import broadcast
-
 
 def albumentations2torchvision(transforms):
     """Wrap albumentations transformation so that they can be used in torchvision dataset"""
@@ -168,7 +166,7 @@ def get_transforms(
       img_std (list of float) : image standard deviation
       img_scale (list of float) : image scale.
       ignore_label (int) : label to pad segmentation masks with.
-      num_stages (int): broadcast training parameters to have this length.
+      num_stages (int): how many train_transforms to create.
       augmentations_type (str): whether to use densetorch augmentations or albumentations.
       dataset_type (str): whether to use densetorch or torchvision dataset, needed to correctly wrap transformations.
 
@@ -176,11 +174,6 @@ def get_transforms(
       train_transforms, val_transforms
 
     """
-    crop_size, shorter_side, low_scale, high_scale = [
-        broadcast(param, num_stages)
-        for param in (crop_size, shorter_side, low_scale, high_scale)
-    ]
-
     if augmentations_type == "densetorch":
         func = densetorch_transforms
     elif augmentations_type == "albumentations":
@@ -293,11 +286,6 @@ def get_datasets(
     train_download,
     val_download,
 ):
-    # Broadcast train dir to have the same length as train_transforms
-    train_dir = broadcast(train_dir, len(train_transforms))
-    train_list_path = broadcast(train_list_path, len(train_transforms))
-    train_download = broadcast(train_download, len(train_transforms))
-    stage_names = broadcast(stage_names, len(train_transforms))
     if dataset_type == "densetorch":
         func = densetorch_dataset
     elif dataset_type == "torchvision":

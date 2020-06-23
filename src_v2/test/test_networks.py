@@ -47,9 +47,7 @@ def input_width():
 
 @pytest.mark.parametrize("enc_backbone", ["50", "101", "152"])
 @pytest.mark.parametrize("enc_pretrained", [False, True])
-def test_transforms(
-    enc_backbone, enc_pretrained, num_classes, input_height, input_width
-):
+def test_networks(enc_backbone, enc_pretrained, num_classes, input_height, input_width):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     network = (
         get_segmenter(
