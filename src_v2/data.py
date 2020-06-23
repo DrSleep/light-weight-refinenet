@@ -35,7 +35,6 @@ def albumentations_transforms(
 ):
     from albumentations import (
         Normalize,
-        VerticalFlip,
         HorizontalFlip,
         RandomCrop,
         PadIfNeeded,
@@ -168,7 +167,8 @@ def get_transforms(
       ignore_label (int) : label to pad segmentation masks with.
       num_stages (int): how many train_transforms to create.
       augmentations_type (str): whether to use densetorch augmentations or albumentations.
-      dataset_type (str): whether to use densetorch or torchvision dataset, needed to correctly wrap transformations.
+      dataset_type (str): whether to use densetorch or torchvision dataset;
+                            needed to correctly wrap transformations.
 
     Returns:
       train_transforms, val_transforms

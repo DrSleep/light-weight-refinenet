@@ -27,11 +27,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-import torch
 import torch.nn as nn
 
 from utils.helpers import maybe_download
-from utils.layer_factory import batchnorm, conv1x1, conv3x3, convbnrelu, CRPBlock
+from utils.layer_factory import conv1x1, conv3x3, convbnrelu, CRPBlock
 
 
 data_info = {21: "VOC"}

@@ -29,19 +29,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from __future__ import print_function, division
 
-import collections
-import glob
 import os
-import random
 import warnings
 
 import cv2
 import numpy as np
 import torch
 from PIL import Image
-from skimage import io, transform
 from torch.utils.data import Dataset
-from torchvision import transforms, utils
 
 warnings.filterwarnings("ignore")
 

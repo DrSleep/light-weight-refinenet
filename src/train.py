@@ -33,7 +33,6 @@ import logging
 import os
 import random
 import re
-import sys
 import time
 
 # misc
@@ -305,7 +304,7 @@ def create_loaders(
     """
     # Torch libraries
     from torchvision import transforms
-    from torch.utils.data import DataLoader, random_split
+    from torch.utils.data import DataLoader
 
     # Custom libraries
     from datasets import NYUDataset as Dataset

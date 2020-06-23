@@ -5,7 +5,10 @@ repos:
     hooks:
     -   id: trailing-whitespace
     -   id: flake8
-        args: ["--ignore=E203,E266,E501,W503,F403,F401,F405", "--max-line-length=100"]
+        args: [
+            "--ignore=E203,E266,W503",
+            "--max-line-length=100",
+            "--per-file-ignores=src/train.py:F403,F405"]
     -   id: end-of-file-fixer
 -   repo: https://github.com/ambv/black
     rev: stable
