@@ -161,6 +161,13 @@ def get_arguments():
         default=(0, 0,),
         help="Only used if dataset_type == torchvision.",
     )
+    stage_parser.add_argument(
+        "--grad-norm",
+        type=float,
+        nargs="+",
+        default=(0.0,),
+        help="If > 0.0, clip gradients' norm to this value.",
+    )
     args = parser.parse_args()
     # Broadcast all arguments in stage-parser
     for group_action in stage_parser._group_actions:

@@ -138,6 +138,7 @@ def main():
                 crits=training_loss,
                 dataloader=train_loaders[stage],
                 freeze_bn=args.freeze_bn[stage],
+                grad_norm=args.grad_norm[stage],
             )
             total_epoch += 1
             for scheduler in schedulers:
