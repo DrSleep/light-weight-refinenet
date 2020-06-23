@@ -1,6 +1,7 @@
 import logging
 import re
 
+from models.mobilenet import mbv2
 from models.resnet import rf_lw50, rf_lw101, rf_lw152
 
 
@@ -14,6 +15,8 @@ def get_segmenter(
         return rf_lw101(num_classes, imagenet=enc_pretrained)
     elif enc_backbone == "152":
         return rf_lw152(num_classes, imagenet=enc_pretrained)
+    elif enc_backbone == "mbv2":
+        return mbv2(num_classes, imagenet=enc_pretrained)
     else:
         raise ValueError("{} is not supported".format(str(enc_backbone)))
 

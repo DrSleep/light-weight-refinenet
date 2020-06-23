@@ -37,7 +37,8 @@ from utils.layer_factory import batchnorm, conv1x1, conv3x3, convbnrelu, CRPBloc
 data_info = {21: "VOC"}
 
 models_urls = {
-    "mbv2_voc": "https://cloudstor.aarnet.edu.au/plus/s/PsEL9uEuxOtIxJV/download"
+    "mbv2_voc": "https://cloudstor.aarnet.edu.au/plus/s/PsEL9uEuxOtIxJV/download",
+    "mbv2_imagenet": "https://cloudstor.aarnet.edu.au/plus/s/uRgFbkaRjD3qOg5/download",
 }
 
 
@@ -123,8 +124,6 @@ class MBv2(nn.Module):
         self.segm = conv3x3(256, num_classes, bias=True)
         self.relu = nn.ReLU6(inplace=True)
 
-        self._initialize_weights()
-
     def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)  # x / 2
@@ -177,7 +176,7 @@ class MBv2(nn.Module):
         return nn.Sequential(*layers)
 
 
-def mbv2(num_classes, pretrained=True, **kwargs):
+def mbv2(num_classes, imagenet=False, pretrained=True, **kwargs):
     """Constructs the network.
 
     Args:
@@ -185,7 +184,11 @@ def mbv2(num_classes, pretrained=True, **kwargs):
 
     """
     model = MBv2(num_classes, **kwargs)
-    if pretrained:
+    if imagenet:
+        key = "mbv2_imagenet"
+        url = models_urls[key]
+        model.load_state_dict(maybe_download(key, url), strict=False)
+    elif pretrained:
         dataset = data_info.get(num_classes, None)
         if dataset:
             bname = "mbv2_" + dataset.lower()

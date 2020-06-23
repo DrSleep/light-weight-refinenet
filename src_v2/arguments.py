@@ -80,7 +80,7 @@ def get_arguments():
 
     # Training / validation setup
     parser.add_argument(
-        "--enc-backbone", type=str, choices=["50", "101", "152"], default="50"
+        "--enc-backbone", type=str, choices=["50", "101", "152", "mbv2"], default="50"
     )
     parser.add_argument("--enc-pretrained", type=int, choices=[0, 1], default=1)
     parser.add_argument(
