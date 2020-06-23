@@ -1,5 +1,4 @@
 import numpy as np
-from torch.optim.lr_scheduler import MultiStepLR
 
 import densetorch as dt
 
@@ -7,12 +6,31 @@ from network import get_encoder_and_decoder_params
 
 
 def get_lr_schedulers(
-    enc_optim, dec_optim, enc_lr_gamma, dec_lr_gamma, epochs_per_stage,
+    enc_optim,
+    dec_optim,
+    enc_lr_gamma,
+    dec_lr_gamma,
+    enc_scheduler_type,
+    dec_scheduler_type,
+    epochs_per_stage,
 ):
     milestones = np.cumsum(epochs_per_stage)
+    max_epochs = milestones[-1]
     schedulers = [
-        MultiStepLR(enc_optim, milestones=milestones, gamma=enc_lr_gamma),
-        MultiStepLR(dec_optim, milestones=milestones, gamma=dec_lr_gamma),
+        dt.misc.create_scheduler(
+            scheduler_type=enc_scheduler_type,
+            optim=enc_optim,
+            gamma=enc_lr_gamma,
+            milestones=milestones,
+            max_epochs=max_epochs,
+        ),
+        dt.misc.create_scheduler(
+            scheduler_type=dec_scheduler_type,
+            optim=dec_optim,
+            gamma=dec_lr_gamma,
+            milestones=milestones,
+            max_epochs=max_epochs,
+        ),
     ]
     return schedulers
 
@@ -29,7 +47,6 @@ def get_optimisers(
     dec_momentum,
 ):
     enc_params, dec_params = get_encoder_and_decoder_params(model)
-    # Create optimisers
     optimisers = [
         dt.misc.create_optim(
             optim_type=enc_optim_type,

@@ -71,6 +71,18 @@ def get_arguments():
         help="Multilpy lr_dec by this value after each stage.",
     )
     parser.add_argument(
+        "--enc-scheduler-type",
+        type=str,
+        choices=["poly", "multistep"],
+        default="multistep",
+    )
+    parser.add_argument(
+        "--dec-scheduler-type",
+        type=str,
+        choices=["poly", "multistep"],
+        default="multistep",
+    )
+    parser.add_argument(
         "--ignore-label",
         type=int,
         default=255,

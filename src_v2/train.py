@@ -106,6 +106,8 @@ def setup_optimisers_and_schedulers(args, model):
         dec_optim=dec_optim,
         enc_lr_gamma=args.enc_lr_gamma,
         dec_lr_gamma=args.dec_lr_gamma,
+        enc_scheduler_type=args.enc_scheduler_type,
+        dec_scheduler_type=args.dec_scheduler_type,
         epochs_per_stage=args.epochs_per_stage,
     )
     return [enc_optim, dec_optim], schedulers
