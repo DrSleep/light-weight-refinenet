@@ -1,5 +1,6 @@
 # general libs
 import logging
+import numpy as np
 
 # pytorch libs
 import torch
@@ -139,15 +140,19 @@ def main():
     # Optimisers
     optimisers, schedulers = setup_optimisers_and_schedulers(args, model=segmenter)
     # Checkpoint
-    saver, epoch_start = setup_checkpoint_and_maybe_restore(
+    saver, restart_epoch = setup_checkpoint_and_maybe_restore(
         args, model=segmenter, optimisers=optimisers, schedulers=schedulers,
     )
-
-    total_epoch = epoch_start
-    for stage, num_epochs in enumerate(args.epochs_per_stage):
-        if stage > 0:
-            epoch_start = 0
-        for epoch in range(epoch_start, num_epochs):
+    # Calculate from which stage and which epoch to restart the training
+    total_epoch = restart_epoch
+    all_epochs = np.cumsum(args.epochs_per_stage)
+    restart_stage = sum(restart_epoch >= all_epochs)
+    if restart_stage > 0:
+        restart_epoch -= all_epochs[restart_stage - 1]
+    for stage in range(restart_stage, args.num_stages):
+        if stage > restart_stage:
+            restart_epoch = 0
+        for epoch in range(restart_epoch, args.epochs_per_stage[stage]):
             logger.info(f"Training: stage {stage} epoch {epoch}")
             dt.engine.train(
                 model=segmenter,
