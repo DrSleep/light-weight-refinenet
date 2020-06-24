@@ -1,10 +1,9 @@
 language: python
 python:
   - "3.6"      # current default Python on Travis CI
-  - "3.8"
 # command to install dependencies
 install:
   - pip install -r requirements3.txt
 # command to run tests
 script:
-  - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m pytest
+  - CUDA_VISIBLE_DEVICES='' PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m pytest
