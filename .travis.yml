@@ -6,4 +6,4 @@ install:
   - pip install -r requirements3.txt
 # command to run tests
 script:
-  - CUDA_VISIBLE_DEVICES='' PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m pytest
+  - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m pytest

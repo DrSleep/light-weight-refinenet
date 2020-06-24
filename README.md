@@ -1,5 +1,7 @@
 # Light-Weight RefineNet (in PyTorch)
 
+[![Build Status](https://api.travis-ci.com/DrSleep/light-weight-refinenet.svg?branch=master)](https://travis-ci.com/DrSleep/light-weight-refinenet)
+
 This repository provides official models from the paper `Light-Weight RefineNet for Real-Time Semantic Segmentation`, available [here](http://bmvc2018.org/contents/papers/0494.pdf)
 
 ```
