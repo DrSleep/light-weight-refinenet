@@ -104,7 +104,7 @@ def setup_data_loaders(args):
 
 
 def setup_optimisers_and_schedulers(args, model):
-    enc_optim, dec_optim = get_optimisers(
+    optimisers = get_optimisers(
         model=model,
         enc_optim_type=args.enc_optim_type,
         enc_lr=args.enc_lr,
@@ -116,15 +116,15 @@ def setup_optimisers_and_schedulers(args, model):
         dec_momentum=args.dec_momentum,
     )
     schedulers = get_lr_schedulers(
-        enc_optim=enc_optim,
-        dec_optim=dec_optim,
+        enc_optim=optimisers[0],
+        dec_optim=optimisers[1],
         enc_lr_gamma=args.enc_lr_gamma,
         dec_lr_gamma=args.dec_lr_gamma,
         enc_scheduler_type=args.enc_scheduler_type,
         dec_scheduler_type=args.dec_scheduler_type,
         epochs_per_stage=args.epochs_per_stage,
     )
-    return [enc_optim, dec_optim], schedulers
+    return optimisers, schedulers
 
 
 def main():
