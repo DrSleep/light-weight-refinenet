@@ -36,19 +36,32 @@ def setup_network(args, device):
     return segmenter, training_loss, validation_loss
 
 
-def setup_checkpoint_and_maybe_restore(args, model):
+def setup_checkpoint_and_maybe_restore(args, model, optimisers, schedulers):
     saver = dt.misc.Saver(
         args=vars(args),
         ckpt_dir=args.ckpt_dir,
         best_val=0,
         condition=lambda x, y: x > y,
     )  # keep checkpoint with the best validation score
-    epoch_start, _, state_dict = saver.maybe_load(
-        ckpt_path=args.ckpt_path, keys_to_load=["epoch", "best_val", "state_dict"],
+    (
+        epoch_start,
+        _,
+        model_state_dict,
+        optims_state_dict,
+        scheds_state_dict,
+    ) = saver.maybe_load(
+        ckpt_path=args.ckpt_path,
+        keys_to_load=["epoch", "best_val", "model", "optimisers", "schedulers"],
     )
     if epoch_start is None:
         epoch_start = 0
-    dt.misc.load_state_dict(model, state_dict)
+    dt.misc.load_state_dict(model, model_state_dict)
+    if optims_state_dict is not None:
+        for optim, optim_state_dict in zip(optimisers, optims_state_dict):
+            optim.load_state_dict(optim_state_dict)
+    if scheds_state_dict is not None:
+        for sched, sched_state_dict in zip(schedulers, scheds_state_dict):
+            sched.load_state_dict(sched_state_dict)
     return saver, epoch_start
 
 
@@ -121,12 +134,14 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # Network
     segmenter, training_loss, validation_loss = setup_network(args, device=device)
-    # Checkpoint
-    saver, epoch_start = setup_checkpoint_and_maybe_restore(args, model=segmenter)
     # Data
     train_loaders, val_loader = setup_data_loaders(args)
     # Optimisers
     optimisers, schedulers = setup_optimisers_and_schedulers(args, model=segmenter)
+    # Checkpoint
+    saver, epoch_start = setup_checkpoint_and_maybe_restore(
+        args, model=segmenter, optimisers=optimisers, schedulers=schedulers,
+    )
 
     total_epoch = epoch_start
     for stage, num_epochs in enumerate(args.epochs_per_stage):
@@ -153,8 +168,14 @@ def main():
                 saver.maybe_save(
                     new_val=vals,
                     dict_to_save={
-                        "state_dict": segmenter.state_dict(),
+                        "model": segmenter.state_dict(),
                         "epoch": total_epoch,
+                        "optimisers": [
+                            optimiser.state_dict() for optimiser in optimisers
+                        ],
+                        "schedulers": [
+                            scheduler.state_dict() for scheduler in schedulers
+                        ],
                     },
                 )
 
