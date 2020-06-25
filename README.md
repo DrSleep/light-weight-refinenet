@@ -2,6 +2,11 @@
 
 [![Build Status](https://api.travis-ci.com/DrSleep/light-weight-refinenet.svg?branch=master)](https://travis-ci.com/DrSleep/light-weight-refinenet)
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/light-weight-refinenet-for-real-time-semantic/semantic-segmentation-on-nyu-depth-v2)](https://paperswithcode.com/sota/semantic-segmentation-on-nyu-depth-v2?p=light-weight-refinenet-for-real-time-semantic)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/light-weight-refinenet-for-real-time-semantic/real-time-semantic-segmentation-on-nyu-depth-1)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-nyu-depth-1?p=light-weight-refinenet-for-real-time-semantic)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/light-weight-refinenet-for-real-time-semantic/semantic-segmentation-on-pascal-voc-2012)](https://paperswithcode.com/sota/semantic-segmentation-on-pascal-voc-2012?p=light-weight-refinenet-for-real-time-semantic)
+
+
 This repository provides official models from the paper `Light-Weight RefineNet for Real-Time Semantic Segmentation`, available [here](http://bmvc2018.org/contents/papers/0494.pdf)
 
 ```
