@@ -12,12 +12,14 @@ NUMBER_OF_PARAMETERS_WITH_21_CLASSES = {
     "152": 61993301,
     "101": 46349653,
     "50": 27357525,
+    "mbv2": 3284565,
 }
 
 NUMBER_OF_ENCODER_DECODER_LAYERS = {
     "152": (465, 28),
     "101": (312, 28),
     "50": (159, 28),
+    "mbv2": (156, 27),
 }
 
 
@@ -45,7 +47,7 @@ def input_width():
     return random.randint(33, 320)
 
 
-@pytest.mark.parametrize("enc_backbone", ["50", "101", "152"])
+@pytest.mark.parametrize("enc_backbone", ["50", "101", "152", "mbv2"])
 @pytest.mark.parametrize("enc_pretrained", [False, True])
 def test_networks(enc_backbone, enc_pretrained, num_classes, input_height, input_width):
     device = "cuda" if torch.cuda.is_available() else "cpu"

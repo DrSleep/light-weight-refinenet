@@ -209,7 +209,7 @@ def densetorch_dataset(
     from densetorch.data import MMDataset as Dataset
 
     def line_to_paths_fn(x):
-        rgb, segm = x.decode("utf-8").strip("\n").split("\t")
+        rgb, segm = x.decode("utf-8").strip("\n").split("\t")[:2]
         return [rgb, segm]
 
     train_sets = [
