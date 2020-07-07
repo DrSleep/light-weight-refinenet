@@ -4,9 +4,10 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements3.txt
+  - pip install coverage
   - pip install codecov
 # command to run tests
 script:
-  - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m pytest
+  - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 coverage run --source=./ -m pytest
 after_success:
   - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m codecov
