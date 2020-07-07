@@ -1,6 +1,7 @@
 # Light-Weight RefineNet (in PyTorch)
 
 [![Build Status](https://api.travis-ci.com/DrSleep/light-weight-refinenet.svg?branch=master)](https://travis-ci.com/DrSleep/light-weight-refinenet)
+[![Test Coverage](https://codecov.io/gh/DrSleep/light-weight-refinenet/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/DrSleep/light-weight-refinenet?branch=master)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/light-weight-refinenet-for-real-time-semantic/semantic-segmentation-on-nyu-depth-v2)](https://paperswithcode.com/sota/semantic-segmentation-on-nyu-depth-v2?p=light-weight-refinenet-for-real-time-semantic)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/light-weight-refinenet-for-real-time-semantic/real-time-semantic-segmentation-on-nyu-depth-1)](https://paperswithcode.com/sota/real-time-semantic-segmentation-on-nyu-depth-1?p=light-weight-refinenet-for-real-time-semantic)
