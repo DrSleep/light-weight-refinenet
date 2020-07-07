@@ -4,6 +4,9 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements3.txt
+  - pip install codecov
 # command to run tests
 script:
   - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m pytest
+after_success:
+  - PYTHONPATH=PYTHOPATH:$(pwd)/src_v2 python -m codecov
