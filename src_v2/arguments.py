@@ -6,7 +6,7 @@ from densetorch.misc import broadcast
 def get_arguments():
     """Parse all the arguments provided from the CLI."""
     parser = argparse.ArgumentParser(
-        description="Arguments for Light-Weight-RefineNet Training Pipelien"
+        description="Arguments for Light-Weight-RefineNet Training Pipeline"
     )
 
     # Common transformations
