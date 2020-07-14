@@ -36,7 +36,7 @@ from utils.layer_factory import conv1x1, conv3x3, convbnrelu, CRPBlock
 data_info = {21: "VOC"}
 
 models_urls = {
-    "mbv2_voc": "https://cloudstor.aarnet.edu.au/plus/s/PsEL9uEuxOtIxJV/download",
+    "mbv2_voc": "https://cloudstor.aarnet.edu.au/plus/s/nQ6wDnTEFhyidot/download",
     "mbv2_imagenet": "https://cloudstor.aarnet.edu.au/plus/s/uRgFbkaRjD3qOg5/download",
 }
 

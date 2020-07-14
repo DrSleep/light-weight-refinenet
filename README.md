@@ -18,7 +18,10 @@ In BMVC 2018
 
 ## UPDATES
 
-### 14, July, 2020: new weights of Light-Weight RefineNet with the ResNet-50 backbone trained on COCO+BSD+VOC via the code in [src_v2/](https://github.com/DrSleep/light-weight-refinenet/tree/master/src_v2) have been uploaded. The model shows *82.04*% mean iou on the validation set in the single-scale regime, and *83.41*% mean iou on the test with multi-scale and horizontal flipping ([per-class test results](http://host.robots.ox.ac.uk/anonymous/UBQIQJ.html)).
+### 14, July, 2020: 
+1. New weights of Light-Weight RefineNet with the ResNet-50 backbone trained on COCO+BSD+VOC via the code in [src_v2/](https://github.com/DrSleep/light-weight-refinenet/tree/master/src_v2) have been uploaded. The model shows *82.04*% mean iou on the validation set in the single-scale regime, and *83.41*% mean iou on the test set with multi-scale and horizontal flipping ([per-class test results](http://host.robots.ox.ac.uk/anonymous/UBQIQJ.html)).
+2. New weights of Light-Weight RefineNet with the MobileNet-v2 backbone trained on COCO+BSD+VOC via the code in [src_v2/](https://github.com/DrSleep/light-weight-refinenet/tree/master/src_v2) have been uploaded. The model shows *78.30*% mean iou on the validation set in the single-scale regime, and *80.28*% mean iou on the test set with multi-scale and horizontal flipping ([per-class test results](http://host.robots.ox.ac.uk/anonymous/R7Q4IV.html)).
+
 
 ### 5, June, 2020: a new version of the code has been pushed. It currently resides in [src_v2/](https://github.com/DrSleep/light-weight-refinenet/tree/master/src_v2). The code now closely interacts with [densetorch](https://github.com/DrSleep/DenseTorch) and supports transformations from [albumentations](https://github.com/albumentations-team/albumentations), while also supporting [torchvision](https://pytorch.org/docs/stable/torchvision/datasets.html) datasets. Three training examples are provided in [train/](https://github.com/DrSleep/light-weight-refinenet/tree/master/train):
 1. [train_v2_nyu.sh](https://github.com/DrSleep/light-weight-refinenet/blob/master/train/train_v2_nyu.sh) is analogous to [nyu.sh](https://github.com/DrSleep/light-weight-refinenet/blob/master/train/nyu.sh), trains Light-Weight-RefineNet-50 on NYU, achieving ~42.4% mean IoU on the validation set (no TTA).
