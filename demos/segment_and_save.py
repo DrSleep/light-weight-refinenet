@@ -56,7 +56,7 @@ def get_segmenter(
         print(f"{i:d}. {dataset:s} with {DATASETS_CLASSES[dataset]:d} output classes.")
     while True:
         answer = input(
-            f"Please select dataset. Type a digit in range [0, {len(supported_datasets) - 1:d}]."
+            f"Please select dataset. Type a digit in range [0, {len(supported_datasets) - 1:d}]. "
         )
         if (
             not answer.isnumeric()
@@ -94,6 +94,7 @@ def save_image_and_mask(image, mask, chosen_class, choices):
         cmap = np.load("utils/cmap.npy")
         coloured_mask = cmap[mask]
         Image.fromarray(coloured_mask).save("coloured_mask.png")
+        return
     selected = mask == choices[int(chosen_class)]
     binary_mask = Image.fromarray(selected.astype(np.uint8) * 255).convert("L")
     image.putalpha(binary_mask)
@@ -104,7 +105,7 @@ def save_image_and_mask(image, mask, chosen_class, choices):
 def main():
     args = get_arguments()
     device = "cpu"
-    if torch.cuda.is_available() and not args.force_run_on_cpu:
+    if torch.cuda.is_available() and not args.run_on_cpu:
         device = "cuda"
     segmenter, dataset = get_segmenter(args.enc_backbone, device)
     input_image, input_tensor = prepare_image(args.image_path, device)
@@ -124,7 +125,7 @@ def main():
                 f"Please select the class of which the image and the binary mask are to be saved. "
                 f"Type a digit in range [0, {i:d}]. "
                 f"Leave empty if you want to save "
-                f"the multi-class segmentation mask of the whole image."
+                f"the multi-class segmentation mask of the whole image. "
             )
             if answer == "":
                 break
