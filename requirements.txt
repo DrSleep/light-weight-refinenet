@@ -8,7 +8,7 @@ jupyter-core==4.4.0
 matplotlib==2.1.2
 notebook>=5.7.2
 numpy==1.14.3
-opencv-python==3.4.0.12
+opencv-python==4.2.0.32
 Pillow>=6.2.0
 scikit-image==0.13.1
 six==1.11.0
