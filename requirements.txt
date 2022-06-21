@@ -7,7 +7,7 @@ jupyter-console==5.2.0
 jupyter-core==4.4.0
 matplotlib==2.1.2
 notebook>=5.7.2
-numpy==1.14.3
+numpy==1.22.0
 opencv-python==3.4.0.12
 Pillow>=6.2.0
 scikit-image==0.13.1
